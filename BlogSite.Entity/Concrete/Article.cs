@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogSite.Entity.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace BlogSite.Entities.Concrete
         public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public int ViewCount { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }
