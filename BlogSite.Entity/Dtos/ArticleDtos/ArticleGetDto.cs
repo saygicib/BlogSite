@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogSite.Entities.Concrete
+namespace BlogSite.Entities.Dtos.ArticleDtos
 {
-    public class Article
+    public class ArticleGetDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,7 +17,5 @@ namespace BlogSite.Entities.Concrete
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
         public int ViewCount { get; set; }
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

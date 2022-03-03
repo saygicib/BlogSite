@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogSite.Entities.Concrete
+namespace BlogSite.Entities.Dtos.CommentDtos
 {
-    public class Comment
+    public class CommentUpdateDto
     {
         public int Id { get; set; }
         public int ArticleId { get; set; }
         public string Name { get; set; }
         public string MainContent { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public virtual Article Article { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace BlogSite.API
             .ConfigureContainer<ContainerBuilder>(builder =>
             {
                 builder.RegisterModule(new AutofacBusinessModule());
+                builder.RegisterModule(new AutofacAutoMapperModule());
             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

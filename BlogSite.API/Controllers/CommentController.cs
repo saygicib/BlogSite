@@ -1,5 +1,6 @@
 ﻿using BlogSite.Business.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.CommentDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -50,34 +51,23 @@ namespace BlogSite.API.Controllers
             return comments;
         }
         [HttpPost("UpdateComment")]
-        public ActionResult<Comment> UpdateComment(Comment comment)
+        public ActionResult UpdateComment(CommentUpdateDto dto)
         {
-            var updatedComment = _commentService.Add(comment);
-            if (updatedComment == null)
-            {
-                return NotFound();
-            }
-            return updatedComment;
+            _commentService.Update(dto);
+            return Ok();
         }
         [HttpPost("AddComment")]
-        public ActionResult<Comment> AddComment(Comment comment)
+        public ActionResult AddComment(CommentAddDto dto)
         {
-            var addedComment = _commentService.Add(comment);
-            if (addedComment == null)
-            {
-                return NotFound();
-            }
-            return addedComment;
+            _commentService.Add(dto);
+            return Ok();
+
         }
         [HttpPost("DeleteComment")]
-        public ActionResult<Comment> DeleteComment(int id)
+        public ActionResult DeleteComment(int id)
         {
-            var deletedComment = _commentService.Delete(id);
-            if (deletedComment == null)
-            {
-                return NotFound();
-            }
-            return deletedComment;
+            _commentService.Delete(id);
+            return Ok();
         }
     }
 }

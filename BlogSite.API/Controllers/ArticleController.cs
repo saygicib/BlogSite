@@ -1,5 +1,6 @@
 ﻿using BlogSite.Business.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.ArticleDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -49,34 +50,22 @@ namespace BlogSite.API.Controllers
             return articles;
         }
         [HttpPost("UpdateArticle")]
-        public ActionResult<Article> UpdateArticle(Article article)
+        public ActionResult UpdateArticle(ArticleUpdateDto dto)
         {
-            var updatedArticle = _articleService.Add(article);
-            if (updatedArticle == null)
-            {
-                return NotFound();
-            }
-            return updatedArticle;
+            _articleService.Update(dto);
+            return Ok();
         }
         [HttpPost("AddArticle")]
-        public ActionResult<Article> AddArticle(Article article)
+        public ActionResult AddArticle(ArticleAddDto dto)
         {
-            var addedArticle = _articleService.Add(article);
-            if (addedArticle == null)
-            {
-                return NotFound();
-            }
-            return addedArticle;
+            _articleService.Add(dto);
+            return Ok();
         }
         [HttpPost("DeleteArticle")]
-        public ActionResult<Article> DeleteArticle(int id)
+        public ActionResult DeleteArticle(int id)
         {
-            var deleteArticle = _articleService.Delete(id);
-            if (deleteArticle == null)
-            {
-                return NotFound();
-            }
-            return deleteArticle;
+            _articleService.Delete(id);
+            return Ok();
         }
     }
 }

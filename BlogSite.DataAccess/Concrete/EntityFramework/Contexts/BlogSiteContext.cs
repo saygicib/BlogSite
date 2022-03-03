@@ -13,8 +13,8 @@ namespace BlogSite.DataAccess.Concrete.EntityFramework.Contexts
     public class BlogSiteContext : DbContext
     {
         public DbSet<Article> Articles { get; set; }
-        public DbSet<Comment> Comments { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

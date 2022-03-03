@@ -1,6 +1,8 @@
-﻿using BlogSite.Business.Abstract;
+﻿using AutoMapper;
+using BlogSite.Business.Abstract;
 using BlogSite.DataAccess.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.CategoryDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +15,23 @@ namespace BlogSite.Business.Concrete
     public class CategoryManager : ICategoryService
     {
         private readonly ICategoryDal _categoryDal;
-        public CategoryManager(ICategoryDal categoryDal)
+        private readonly IMapper _mapper;
+        public CategoryManager(ICategoryDal categoryDal, IMapper mapper)
         {
             _categoryDal = categoryDal;
+            _mapper = mapper;
         }
 
-        public Category Add(Category entity)
+        public void Add(CategoryAddDto dto)
         {
-            return _categoryDal.Add(entity);
+            var addCategory = _mapper.Map<Category>(dto);
+            _categoryDal.Add(addCategory);
         }
 
-        public Category Delete(int id)
+        public void Delete(int id)
         {
             var category = _categoryDal.GetById(id);
-            return _categoryDal.Delete(category);
+            _categoryDal.Delete(category);
         }
 
         public List<Category> GetAll(Expression<Func<Category, bool>> predicate = null)
@@ -44,9 +49,10 @@ namespace BlogSite.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Category Update(Category entity)
+        public void Update(CategoryUpdateDto dto)
         {
-            return _categoryDal.Update(entity);
+            var updateCategory = _mapper.Map<Category>(dto);
+            _categoryDal.Update(updateCategory);
         }
     }
 }

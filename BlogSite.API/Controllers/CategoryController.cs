@@ -1,5 +1,6 @@
 ﻿using BlogSite.Business.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.CategoryDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,34 +41,22 @@ namespace BlogSite.API.Controllers
             return category;
         }        
         [HttpPost("UpdateCategory")]
-        public ActionResult<Category> UpdateCategory(Category article)
+        public ActionResult UpdateCategory(CategoryUpdateDto category)
         {
-            var updatedArticle = _categoryService.Add(article);
-            if (updatedArticle == null)
-            {
-                return NotFound();
-            }
-            return updatedArticle;
+            _categoryService.Update(category);
+            return Ok();
         }
         [HttpPost("AddCategory")]
-        public ActionResult<Category> AddCategory(Category article)
+        public ActionResult AddCategory(CategoryAddDto category)
         {
-            var addedArticle = _categoryService.Add(article);
-            if (addedArticle == null)
-            {
-                return NotFound();
-            }
-            return addedArticle;
+            _categoryService.Add(category);
+            return Ok();
         }
         [HttpPost("DeleteCategory")]
-        public ActionResult<Category> DeleteCategory(int id)
+        public ActionResult DeleteCategory(int id)
         {
-            var deleteArticle = _categoryService.Delete(id);
-            if (deleteArticle == null)
-            {
-                return NotFound();
-            }
-            return deleteArticle;
+            _categoryService.Delete(id);
+            return Ok();
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using BlogSite.Business.Abstract;
+﻿using AutoMapper;
+using BlogSite.Business.Abstract;
 using BlogSite.DataAccess.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.ArticleDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +15,23 @@ namespace BlogSite.Business.Concrete
     public class ArticleManager : IArticleService
     {
         private readonly IArticleDal _articleDal;
-        public ArticleManager(IArticleDal articleDal)
+        private IMapper _mapper;
+        public ArticleManager(IArticleDal articleDal, IMapper mapper)
         {
             _articleDal = articleDal;
+            _mapper = mapper;
         }
 
-        public Article Add(Article entity)
+        public void Add(ArticleAddDto dto)
         {
-            return _articleDal.Add(entity);
+            var addArticle = _mapper.Map<Article>(dto);
+            _articleDal.Add(addArticle);
         }
 
-        public Article Delete(int id)
+        public void Delete(int id)
         {
-            var article = _articleDal.GetById(id);
-            return _articleDal.Delete(article);
+            var deleteArticle = _articleDal.GetById(id);
+            _articleDal.Delete(deleteArticle);
         }
 
         public List<Article> GetAll(Expression<Func<Article, bool>> predicate = null)
@@ -49,9 +54,10 @@ namespace BlogSite.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Article Update(Article entity)
+        public void Update(ArticleUpdateDto dto)
         {
-            return _articleDal.Update(entity);
+            var updateArticle = _mapper.Map<Article>(dto);
+            _articleDal.Update(updateArticle);
         }
     }
 }

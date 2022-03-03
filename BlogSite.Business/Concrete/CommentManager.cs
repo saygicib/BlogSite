@@ -1,6 +1,8 @@
-﻿using BlogSite.Business.Abstract;
+﻿using AutoMapper;
+using BlogSite.Business.Abstract;
 using BlogSite.DataAccess.Abstract;
 using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.CommentDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +15,23 @@ namespace BlogSite.Business.Concrete
     public class CommentManager : ICommentService
     {
         private readonly ICommentDal _commentDal;
-        public CommentManager(ICommentDal commentDal)
+        private IMapper _mapper;
+        public CommentManager(ICommentDal commentDal, IMapper mapper)
         {
             _commentDal = commentDal;
+            _mapper = mapper;
         }
 
-        public Comment Add(Comment entity)
+        public void Add(CommentAddDto dto)
         {
-            return _commentDal.Add(entity);
+            var addComment = _mapper.Map<Comment>(dto);
+            _commentDal.Add(addComment);
         }
 
-        public Comment Delete(int id)
+        public void Delete(int id)
         {
             var category = _commentDal.GetById(id);
-            return _commentDal.Delete(category);
+            _commentDal.Delete(category);
         }
 
         public List<Comment> GetAll(Expression<Func<Comment, bool>> predicate = null)
@@ -49,9 +54,10 @@ namespace BlogSite.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Comment Update(Comment entity)
+        public void Update(CommentUpdateDto dto)
         {
-            return _commentDal.Update(entity);
+            var updateComment = _mapper.Map<Comment>(dto);
+            _commentDal.Update(updateComment);
         }
     }
 }

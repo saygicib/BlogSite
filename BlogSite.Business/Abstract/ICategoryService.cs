@@ -1,4 +1,5 @@
 ﻿using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.CategoryDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace BlogSite.Business.Abstract
         Category GetById(int id);
         Category GetOne(Expression<Func<Category, bool>> predicate = null);
         List<Category> GetAll(Expression<Func<Category, bool>> predicate = null);
-        Category Add(Category entity);
-        Category Update(Category entity);
-        Category Delete(int id);
+        void Add(CategoryAddDto entity);
+        void Update(CategoryUpdateDto entity);
+        void Delete(int id);
     }
 }

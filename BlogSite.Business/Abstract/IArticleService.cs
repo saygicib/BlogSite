@@ -1,4 +1,5 @@
 ﻿using BlogSite.Entities.Concrete;
+using BlogSite.Entities.Dtos.ArticleDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace BlogSite.Business.Abstract
         Article GetById(int id);
         Article GetOne(Expression<Func<Article, bool>> predicate = null);
         List<Article> GetAll(Expression<Func<Article, bool>> predicate = null);
-        Article Add(Article entity);
-        Article Update(Article entity);
-        Article Delete(int id);
+        void Add(ArticleAddDto entity);
+        void Update(ArticleUpdateDto entity);
+        void Delete(int id);
         List<Article> GetArticlesByCategoryId(int categoryId);
     }
 }
