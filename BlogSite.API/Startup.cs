@@ -29,6 +29,15 @@ namespace BlogSite.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(x =>
+                {
+                    x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                });
+            });
+
+
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICommentService, CommentManager>();
@@ -58,6 +67,10 @@ namespace BlogSite.API
             }
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
