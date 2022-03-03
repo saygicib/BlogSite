@@ -19,5 +19,6 @@ namespace BlogSite.Entities.Concrete
         public int ViewCount { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

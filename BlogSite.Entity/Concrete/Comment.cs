@@ -1,17 +1,18 @@
-﻿using BlogSite.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogSite.Entity.Concrete
+namespace BlogSite.Entities.Concrete
 {
-    public class Category
+    public class Comment
     {
         public int Id { get; set; }
+        public int ArticleId { get; set; }
         public string Name { get; set; }
+        public string MainContent { get; set; }
         public DateTime CreatedDate { get; set; }
-        public List<Article> Articles { get; set; }
+        public Article Article { get; set; }
     }
 }
