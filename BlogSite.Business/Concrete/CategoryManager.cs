@@ -1,6 +1,6 @@
 ﻿using BlogSite.Business.Abstract;
 using BlogSite.DataAccess.Abstract;
-using BlogSite.Entity.Concrete;
+using BlogSite.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using BlogSite.Entity.Concrete;
+﻿using BlogSite.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
