@@ -20,6 +20,7 @@ namespace BlogSite.DataAccess.Concrete.EntityFramework.Mappings
             builder.Property(x => x.CategoryId).IsRequired();
             builder.Property(x => x.ContentSummary).IsRequired().HasColumnType("nvarchar(500)");
             builder.Property(x => x.CreatedDate).IsRequired().HasColumnType("datetime");
+            builder.Property(x => x.UpdatedDate).IsRequired().HasColumnType("datetime");
             builder.Property(x => x.ImageUrl).HasColumnType("nvarchar(100)");
             builder.Property(x => x.MainContent).IsRequired().HasColumnType("nvarchar(MAX)");
             builder.Property(x => x.Title).IsRequired().HasColumnType("nvarchar(100)");
