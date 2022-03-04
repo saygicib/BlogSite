@@ -29,13 +29,8 @@ namespace BlogSite.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(x =>
-                {
-                    x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-                });
-            });
+            services.AddCors(options => options.AddDefaultPolicy(policy =>
+            policy.AllowCredentials().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(x => true)));
 
 
             services.AddScoped<IArticleService, ArticleManager>();
