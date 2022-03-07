@@ -23,5 +23,14 @@ namespace BlogSite.DataAccess.Concrete.EntityFramework.Repositories
                 return articleList;
             }
         }
+        public List<Article> GetAllWithPagging(int page, int pageSize)
+        {
+            using (var context = new BlogSiteContext())
+            {
+                var articles = context.Articles.AsQueryable();
+                articles = articles.Include(x => x.Category).Skip((page-1)*pageSize).Take(pageSize);
+                return articles.ToList();
+            }
+        }
     }
 }

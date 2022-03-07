@@ -19,7 +19,7 @@ namespace BlogSite.API.Controllers
         {
             _articleService = articleService;
         }
-        [HttpGet("GetArticles")]
+        [HttpGet]
         public ActionResult<List<Article>> GetArticles()
         {
             var articles = _articleService.GetAll();
@@ -29,7 +29,18 @@ namespace BlogSite.API.Controllers
             }
             return articles;
         }
-        [HttpGet("GetArictleById")]
+
+
+        [HttpGet("{page}/{pageSize}")]
+        public IActionResult GetArticles(int page=1,int pageSize=5)
+        {
+            var articles = _articleService.GetAllWithPagging(page, pageSize);
+            return Ok(articles);
+        }
+
+
+
+        [HttpGet("{id}")]
         public ActionResult<Article> GetArticle(int id)
         {
             var article = _articleService.GetById(id);
@@ -49,19 +60,19 @@ namespace BlogSite.API.Controllers
             }
             return articles;
         }
-        [HttpPost("UpdateArticle")]
-        public ActionResult UpdateArticle(ArticleUpdateDto dto)
+        [HttpPut("{id}")]
+        public ActionResult UpdateArticle(int id,ArticleUpdateDto dto)
         {
             _articleService.Update(dto);
             return Ok();
         }
-        [HttpPost("AddArticle")]
+        [HttpPost]
         public ActionResult AddArticle(ArticleAddDto dto)
         {
             _articleService.Add(dto);
             return Ok();
         }
-        [HttpPost("DeleteArticle")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteArticle(int id)
         {
             _articleService.Delete(id);

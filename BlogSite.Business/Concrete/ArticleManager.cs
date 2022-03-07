@@ -39,6 +39,17 @@ namespace BlogSite.Business.Concrete
             return _articleDal.GetAll();
         }
 
+        public ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize)
+        {
+            var articles = _articleDal.GetAllWithPagging(page, pageSize);
+            var count = _articleDal.GetAll().Count();
+            var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles);
+            ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
+            articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
+            articleGetDtoWithPagging.TotalCount = count;
+            return articleGetDtoWithPagging;
+        }
+
         public List<Article> GetArticlesByCategoryId(int categoryId)
         {
             return _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);

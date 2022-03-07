@@ -20,9 +20,10 @@ namespace BlogSite.API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("GetCategories")]
-        public ActionResult<List<Category>> GetCategories()
+        [HttpGet]
+        public ActionResult<List<CategoryGetDto>> GetCategory()
         {
+            System.Threading.Thread.Sleep(500);
             var categories = _categoryService.GetAll();
             if (categories == null)
             {
@@ -30,8 +31,8 @@ namespace BlogSite.API.Controllers
             }
             return categories;
         }
-        [HttpGet("GetCategoryById")]
-        public ActionResult<Category> GetCategory(int id)
+        [HttpGet("{id}")]
+        public ActionResult<CategoryGetDto> GetCategory(int id)
         {
             var category = _categoryService.GetById(id);
             if (category == null)
@@ -40,19 +41,19 @@ namespace BlogSite.API.Controllers
             }
             return category;
         }        
-        [HttpPost("UpdateCategory")]
-        public ActionResult UpdateCategory(CategoryUpdateDto category)
+        [HttpPut("{id}")]
+        public ActionResult UpdateCategory(int id,CategoryUpdateDto category)
         {
             _categoryService.Update(category);
             return Ok();
         }
-        [HttpPost("AddCategory")]
+        [HttpPost]
         public ActionResult AddCategory(CategoryAddDto category)
         {
             _categoryService.Add(category);
             return Ok();
         }
-        [HttpPost("DeleteCategory")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteCategory(int id)
         {
             _categoryService.Delete(id);

@@ -11,9 +11,9 @@ namespace BlogSite.Business.Abstract
 {
     public interface ICategoryService
     {
-        Category GetById(int id);
-        Category GetOne(Expression<Func<Category, bool>> predicate = null);
-        List<Category> GetAll(Expression<Func<Category, bool>> predicate = null);
+        CategoryGetDto GetById(int id);
+        CategoryGetDto GetOne(Expression<Func<CategoryGetDto, bool>> predicate = null);
+        List<CategoryGetDto> GetAll(Expression<Func<CategoryGetDto, bool>> predicate = null);
         void Add(CategoryAddDto entity);
         void Update(CategoryUpdateDto entity);
         void Delete(int id);

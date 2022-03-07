@@ -11,5 +11,6 @@ namespace BlogSite.DataAccess.Abstract
     public interface IArticleDal : IRepositoryBaseDal<Article>
     {
         List<Article> GetArticlesByCategoryId(Expression<Func<Article, bool>> predicate = null);
+        List<Article> GetAllWithPagging(int page, int pageSize);
     }
 }

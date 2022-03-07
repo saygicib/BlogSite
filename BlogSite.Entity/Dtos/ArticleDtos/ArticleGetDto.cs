@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogSite.Entities.Dtos.CategoryDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace BlogSite.Entities.Dtos.ArticleDtos
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
         public int ViewCount { get; set; }
-        public int CategoryId { get; set; }
+        public int CommentCount { get; set; }
+        public CategoryGetDto Category { get; set; }
     }
 }

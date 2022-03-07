@@ -34,17 +34,21 @@ namespace BlogSite.Business.Concrete
             _categoryDal.Delete(category);
         }
 
-        public List<Category> GetAll(Expression<Func<Category, bool>> predicate = null)
+        public List<CategoryGetDto> GetAll(Expression<Func<CategoryGetDto, bool>> predicate = null)
         {
-            return _categoryDal.GetAll();
+            var categories = _categoryDal.GetAll();
+            var mappedCategories = _mapper.Map<List<CategoryGetDto>>(categories);
+            return mappedCategories;
         }
 
-        public Category GetById(int id)
+        public CategoryGetDto GetById(int id)
         {
-            return _categoryDal.GetById(id);
+            var category = _categoryDal.GetById(id);
+            var mappedCategory = _mapper.Map<CategoryGetDto>(category);
+            return mappedCategory;
         }
 
-        public Category GetOne(Expression<Func<Category, bool>> predicate = null)
+        public CategoryGetDto GetOne(Expression<Func<CategoryGetDto, bool>> predicate = null)
         {
             throw new NotImplementedException();
         }
