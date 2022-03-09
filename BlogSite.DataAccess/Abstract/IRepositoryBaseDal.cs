@@ -16,6 +16,8 @@ namespace BlogSite.DataAccess.Abstract
         TEntity Add(TEntity entity);
         TEntity Update(TEntity entity);
         TEntity Delete(TEntity entity);
+        int Count(Expression<Func<TEntity, bool>> predicate = null);
+        IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties);
     }
 
 }

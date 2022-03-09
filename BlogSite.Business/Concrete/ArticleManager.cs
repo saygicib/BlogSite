@@ -15,11 +15,13 @@ namespace BlogSite.Business.Concrete
     public class ArticleManager : IArticleService
     {
         private readonly IArticleDal _articleDal;
+        private readonly ICommentDal _commentDal;
         private IMapper _mapper;
-        public ArticleManager(IArticleDal articleDal, IMapper mapper)
+        public ArticleManager(IArticleDal articleDal, IMapper mapper, ICommentDal commentDal)
         {
             _articleDal = articleDal;
             _mapper = mapper;
+            _commentDal = commentDal;
         }
 
         public void Add(ArticleAddDto dto)
@@ -59,6 +61,7 @@ namespace BlogSite.Business.Concrete
         {
             var article = _articleDal.Get(x => x.Id == id, x => x.Category);
             var mappedArticle = _mapper.Map<ArticleGetDto>(article);
+            mappedArticle.CommentCount = _commentDal.Count(x => x.ArticleId == id);
             return mappedArticle;
         }
 
