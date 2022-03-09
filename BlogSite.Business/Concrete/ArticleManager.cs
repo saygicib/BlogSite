@@ -40,7 +40,20 @@ namespace BlogSite.Business.Concrete
         {
             return _articleDal.GetAll();
         }
-
+        public ArticleGetDtoWithPagging GetArticlesWithPaggingByCategoryId(int categoryId,int page, int pageSize)
+        {
+            var articles = _articleDal.GetAllWithPagging(page, pageSize,x=>x.CategoryId==categoryId);
+            var count = _articleDal.Count(x=>x.CategoryId==categoryId);
+            var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles);
+            foreach (var item in mappedArticle)
+            {
+                item.CommentCount = _commentDal.Count(x => x.ArticleId == item.Id);
+            }
+            ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
+            articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
+            articleGetDtoWithPagging.TotalCount = count;
+            return articleGetDtoWithPagging;
+        }
         public ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize)
         {
             var articles = _articleDal.GetAllWithPagging(page, pageSize);

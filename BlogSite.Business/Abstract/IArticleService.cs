@@ -15,6 +15,7 @@ namespace BlogSite.Business.Abstract
         Article GetOne(Expression<Func<Article, bool>> predicate = null);
         List<Article> GetAll(Expression<Func<Article, bool>> predicate = null);
         ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize);
+        ArticleGetDtoWithPagging GetArticlesWithPaggingByCategoryId(int categoryId,int page, int pageSize);
         void Add(ArticleAddDto entity);
         void Update(ArticleUpdateDto entity);
         void Delete(int id);

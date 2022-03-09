@@ -52,15 +52,15 @@ namespace BlogSite.API.Controllers
             }
             return article;
         }
-        [HttpGet("GetArticlesByCategoryId")]
-        public ActionResult<List<Article>> GetArticles(int categoryId)
+        [HttpGet("GetArticlesByCategoryId/{categoryId}/{page}/{pageSize}")]
+        public IActionResult GetArticles(int categoryId, int page = 1, int pageSize = 5)
         {
-            var articles = _articleService.GetArticlesByCategoryId(categoryId);
+            var articles = _articleService.GetArticlesWithPaggingByCategoryId(categoryId,page,pageSize);
             if (articles == null)
             {
                 return NotFound();
             }
-            return articles;
+            return Ok(articles);
         }
         [HttpPut("{id}")]
         public ActionResult UpdateArticle(int id,ArticleUpdateDto dto)
