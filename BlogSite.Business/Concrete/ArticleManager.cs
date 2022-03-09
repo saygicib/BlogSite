@@ -46,6 +46,10 @@ namespace BlogSite.Business.Concrete
             var articles = _articleDal.GetAllWithPagging(page, pageSize);
             var count = _articleDal.GetAll().Count();
             var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles);
+            foreach (var item in mappedArticle)
+            {
+                item.CommentCount = _commentDal.Count(x => x.ArticleId == item.Id);
+            }
             ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
             articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
             articleGetDtoWithPagging.TotalCount = count;
