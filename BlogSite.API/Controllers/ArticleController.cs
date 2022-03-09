@@ -42,9 +42,10 @@ namespace BlogSite.API.Controllers
 
 
         [HttpGet("{id}")]
-        public ActionResult<Article> GetArticle(int id)
+        public ActionResult<ArticleGetDto> GetArticle(int id)
         {
-            var article = _articleService.GetById(id);
+            System.Threading.Thread.Sleep(1000);
+            var article = _articleService.Get(id);
             if (article == null)
             {
                 return NotFound();

@@ -11,7 +11,7 @@ namespace BlogSite.Business.Abstract
 {
     public interface IArticleService
     {
-        Article GetById(int id);
+        ArticleGetDto Get(int id);
         Article GetOne(Expression<Func<Article, bool>> predicate = null);
         List<Article> GetAll(Expression<Func<Article, bool>> predicate = null);
         ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize);

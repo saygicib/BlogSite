@@ -55,9 +55,11 @@ namespace BlogSite.Business.Concrete
             return _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);
         }
 
-        public Article GetById(int id)
+        public ArticleGetDto Get(int id)
         {
-            return _articleDal.GetById(id);
+            var article = _articleDal.Get(x => x.Id == id, x => x.Category);
+            var mappedArticle = _mapper.Map<ArticleGetDto>(article);
+            return mappedArticle;
         }
 
         public Article GetOne(Expression<Func<Article, bool>> predicate = null)

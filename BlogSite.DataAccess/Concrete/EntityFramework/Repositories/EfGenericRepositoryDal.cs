@@ -59,7 +59,25 @@ namespace BlogSite.DataAccess.Concrete.EntityFramework.Repositories
                     : context.Set<TEntity>().Where(predicate).SingleOrDefault();
             }
         }
-
+        public TEntity Get(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            using (TContext context = new TContext())
+            {
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                if (predicate != null)
+                {
+                    query = query.Where(predicate);
+                }
+                if (includeProperties.Any())
+                {
+                    foreach (var includeProperty in includeProperties)
+                    {
+                        query = query.Include(includeProperty);
+                    }
+                }
+                return query.FirstOrDefault();
+            }
+        }
         public virtual TEntity Update(TEntity entity)
         {
             using (TContext context = new TContext())
