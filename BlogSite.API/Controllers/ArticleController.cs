@@ -34,6 +34,7 @@ namespace BlogSite.API.Controllers
         [HttpGet("{page}/{pageSize}")]
         public IActionResult GetArticles(int page=1,int pageSize=5)
         {
+            System.Threading.Thread.Sleep(500);
             var articles = _articleService.GetAllWithPagging(page, pageSize);
             return Ok(articles);
         }
