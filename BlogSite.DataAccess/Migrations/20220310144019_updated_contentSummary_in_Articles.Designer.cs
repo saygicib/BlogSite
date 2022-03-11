@@ -4,14 +4,16 @@ using BlogSite.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlogSite.DataAccess.Migrations
 {
     [DbContext(typeof(BlogSiteContext))]
-    partial class BlogSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20220310144019_updated_contentSummary_in_Articles")]
+    partial class updated_contentSummary_in_Articles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
