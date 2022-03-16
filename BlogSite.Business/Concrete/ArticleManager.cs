@@ -30,30 +30,48 @@ namespace BlogSite.Business.Concrete
             _articleDal.Add(addArticle);
         }
 
+        public List<Article> GetArticlesByCategoryId(int categoryId)
+        {
+            return _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);
+        }
+
+        public ArticleGetDto Get(int id)
+        {
+            var article = _articleDal.Get(x => x.Id == id, x => x.Category);
+            article.ViewCount += 1;
+            _articleDal.Update(article);
+            var mappedArticle = _mapper.Map<ArticleGetDto>(article);
+            mappedArticle.CommentCount = _commentDal.Count(x => x.ArticleId == id);
+            return mappedArticle;
+        }
+
+        public Article GetOne()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ArticleUpdateDto dto)
+        {
+            var updateArticle = _mapper.Map<Article>(dto);
+            _articleDal.Update(updateArticle);
+        }
         public void Delete(int id)
         {
             var deleteArticle = _articleDal.GetById(id);
             _articleDal.Delete(deleteArticle);
         }
 
-        public List<Article> GetAll(Expression<Func<Article, bool>> predicate = null)
+        public List<Article> GetAll()
         {
             return _articleDal.GetAll();
         }
-        public ArticleGetDtoWithPagging GetArticlesWithPaggingByCategoryId(int categoryId,int page, int pageSize)
+
+        public List<Article> GetArticlesByMostView()
         {
-            var articles = _articleDal.GetAllWithPagging(page, pageSize,x=>x.CategoryId==categoryId);
-            var count = _articleDal.Count(x=>x.CategoryId==categoryId);
-            var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles);
-            foreach (var item in mappedArticle)
-            {
-                item.CommentCount = _commentDal.Count(x => x.ArticleId == item.Id);
-            }
-            ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
-            articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
-            articleGetDtoWithPagging.TotalCount = count;
-            return articleGetDtoWithPagging;
+            var articles = _articleDal.GetByTakeNumber(10).OrderByDescending(x => x.ViewCount).ToList();
+            return articles;
         }
+
         public ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize)
         {
             var articles = _articleDal.GetAllWithPagging(page, pageSize);
@@ -69,28 +87,34 @@ namespace BlogSite.Business.Concrete
             return articleGetDtoWithPagging;
         }
 
-        public List<Article> GetArticlesByCategoryId(int categoryId)
+        public ArticleGetDtoWithPagging GetArticlesWithPaggingByCategoryId(int categoryId, int page, int pageSize)
         {
-            return _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);
+            var articles = _articleDal.GetAllWithPagging(page, pageSize, x => x.CategoryId == categoryId);
+            var count = _articleDal.Count(x => x.CategoryId == categoryId);
+            var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles);
+            foreach (var item in mappedArticle)
+            {
+                item.CommentCount = _commentDal.Count(x => x.ArticleId == item.Id);
+            }
+            ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
+            articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
+            articleGetDtoWithPagging.TotalCount = count;
+            return articleGetDtoWithPagging;
         }
 
-        public ArticleGetDto Get(int id)
+        public ArticleGetDtoWithPagging GetArticlesWithPaggingBySearchText(string searchText, int page, int pageSize)
         {
-            var article = _articleDal.Get(x => x.Id == id, x => x.Category);
-            var mappedArticle = _mapper.Map<ArticleGetDto>(article);
-            mappedArticle.CommentCount = _commentDal.Count(x => x.ArticleId == id);
-            return mappedArticle;
-        }
-
-        public Article GetOne(Expression<Func<Article, bool>> predicate = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(ArticleUpdateDto dto)
-        {
-            var updateArticle = _mapper.Map<Article>(dto);
-            _articleDal.Update(updateArticle);
+            var articles = _articleDal.GetAllWithPagging(page, pageSize, x => x.Title.Contains(searchText));
+            var count = _articleDal.Count(x => x.Title.Contains(searchText));
+            var mappedArticle = _mapper.Map<List<ArticleGetDto>>(articles.OrderByDescending(x => x.CreatedDate));
+            foreach (var item in mappedArticle)
+            {
+                item.CommentCount = _commentDal.Count(x => x.ArticleId == item.Id);
+            }
+            ArticleGetDtoWithPagging articleGetDtoWithPagging = new();
+            articleGetDtoWithPagging.ArticleGetDtos = mappedArticle;
+            articleGetDtoWithPagging.TotalCount = count;
+            return articleGetDtoWithPagging;
         }
     }
 }

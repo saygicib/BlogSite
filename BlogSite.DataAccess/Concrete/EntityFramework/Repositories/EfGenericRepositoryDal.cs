@@ -41,6 +41,15 @@ namespace BlogSite.DataAccess.Concrete.EntityFramework.Repositories
                     : context.Set<TEntity>().Where(predicate).ToList();
             }
         }
+        public virtual List<TEntity> GetByTakeNumber(int take,Expression<Func<TEntity, bool>> predicate = null)
+        {
+            using (var context = new TContext())
+            {
+                return predicate == null
+                    ? context.Set<TEntity>().Take(take).ToList()
+                    : context.Set<TEntity>().Where(predicate).Take(take).ToList();
+            }
+        }
 
         public virtual TEntity GetById(int id)
         {

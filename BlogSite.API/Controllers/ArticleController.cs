@@ -19,51 +19,9 @@ namespace BlogSite.API.Controllers
         {
             _articleService = articleService;
         }
-        [HttpGet]
-        public ActionResult<List<Article>> GetArticles()
-        {
-            var articles = _articleService.GetAll();
-            if (articles == null)
-            {
-                return NotFound();
-            }
-            return articles;
-        }
 
-
-        [HttpGet("{page}/{pageSize}")]
-        public IActionResult GetArticles(int page=1,int pageSize=5)
-        {
-            System.Threading.Thread.Sleep(500);
-            var articles = _articleService.GetAllWithPagging(page, pageSize);
-            return Ok(articles);
-        }
-
-
-
-        [HttpGet("{id}")]
-        public ActionResult<ArticleGetDto> GetArticle(int id)
-        {
-            System.Threading.Thread.Sleep(1000);
-            var article = _articleService.Get(id);
-            if (article == null)
-            {
-                return NotFound();
-            }
-            return article;
-        }
-        [HttpGet("GetArticlesByCategoryId/{categoryId}/{page}/{pageSize}")]
-        public IActionResult GetArticles(int categoryId, int page = 1, int pageSize = 5)
-        {
-            var articles = _articleService.GetArticlesWithPaggingByCategoryId(categoryId,page,pageSize);
-            if (articles == null)
-            {
-                return NotFound();
-            }
-            return Ok(articles);
-        }
         [HttpPut("{id}")]
-        public ActionResult UpdateArticle(int id,ArticleUpdateDto dto)
+        public ActionResult UpdateArticle(int id, ArticleUpdateDto dto)
         {
             _articleService.Update(dto);
             return Ok();
@@ -80,5 +38,70 @@ namespace BlogSite.API.Controllers
             _articleService.Delete(id);
             return Ok();
         }
+
+        [HttpGet]
+        public ActionResult<List<Article>> GetArticles()
+        {
+            var articles = _articleService.GetAll();
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return articles;
+        }
+        [HttpGet("GetArticlesByMostView")]
+        public ActionResult<List<Article>> GetArticlesByMostView()
+        {
+            var articles = _articleService.GetArticlesByMostView();
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return articles;
+        }
+
+        [HttpGet("{page}/{pageSize}")]
+        public IActionResult GetArticles(int page=1,int pageSize=5)
+        {
+            System.Threading.Thread.Sleep(1500);
+            var articles = _articleService.GetAllWithPagging(page, pageSize);
+            return Ok(articles);
+        }
+
+
+
+        [HttpGet("{id}")]
+        public ActionResult<ArticleGetDto> GetArticle(int id)
+        {
+            System.Threading.Thread.Sleep(1500);
+            var article = _articleService.Get(id);
+            if (article == null)
+            {
+                return NotFound();
+            }
+            return article;
+        }
+        [HttpGet("GetArticlesByCategoryId/{categoryId}/{page}/{pageSize}")]
+        public IActionResult GetArticles(int categoryId, int page = 1, int pageSize = 5)
+        {
+            System.Threading.Thread.Sleep(1500);
+            var articles = _articleService.GetArticlesWithPaggingByCategoryId(categoryId,page,pageSize);
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return Ok(articles);
+        }
+        [HttpGet("GetArticlesBySearchText/{searchText}/{page}/{pageSize}")]
+        public IActionResult SearchArticles(string searchText, int page = 1, int pageSize = 5)
+        {
+            System.Threading.Thread.Sleep(1500);
+            var articles = _articleService.GetArticlesWithPaggingBySearchText(searchText, page, pageSize);
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return Ok(articles);
+        }      
     }
 }
