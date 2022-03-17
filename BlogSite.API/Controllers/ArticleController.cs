@@ -40,7 +40,7 @@ namespace BlogSite.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Article>> GetArticles()
+        public ActionResult<List<ArticleGetDto>> GetArticles()
         {
             var articles = _articleService.GetAll();
             if (articles == null)
@@ -50,7 +50,7 @@ namespace BlogSite.API.Controllers
             return articles;
         }
         [HttpGet("GetArticlesByMostView")]
-        public ActionResult<List<Article>> GetArticlesByMostView()
+        public ActionResult<List<ArticleGetDto>> GetArticlesByMostView()
         {
             var articles = _articleService.GetArticlesByMostView();
             if (articles == null)
@@ -58,6 +58,30 @@ namespace BlogSite.API.Controllers
                 return NotFound();
             }
             return articles;
+        }
+
+        [HttpGet("GetArticlesArchive")]
+        public ActionResult GetArticlesArchive()
+        {
+            System.Threading.Thread.Sleep(500);
+            var articles = _articleService.GetArticlesArchive();
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return Ok(articles);
+        }
+
+        [HttpGet("GetArticlesArchiveList/{year}/{month}/{page}/{pageSize}")]
+        public ActionResult GetArticlesArchiveList(int year,int month,int page=1,int pageSize=5)
+        {
+            System.Threading.Thread.Sleep(500);
+            var articles = _articleService.GetArticlesArchiveList(year,month,page,pageSize);
+            if (articles == null)
+            {
+                return NotFound();
+            }
+            return Ok(articles);
         }
 
         [HttpGet("{page}/{pageSize}")]

@@ -12,5 +12,6 @@ namespace BlogSite.DataAccess.Abstract
     {
         List<Article> GetArticlesByCategoryId(Expression<Func<Article, bool>> predicate = null);
         List<Article> GetAllWithPagging(int page, int pageSize,Expression<Func<Article, bool>> predicate = null);
+        object GetArticlesArchiveGroupByDate(Expression<Func<Article, bool>> predicate = null);
     }
 }

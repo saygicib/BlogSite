@@ -30,9 +30,12 @@ namespace BlogSite.Business.Concrete
             _articleDal.Add(addArticle);
         }
 
-        public List<Article> GetArticlesByCategoryId(int categoryId)
+        public List<ArticleGetDto> GetArticlesByCategoryId(int categoryId)
         {
-            return _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);
+
+            var articles = _articleDal.GetArticlesByCategoryId(x => x.CategoryId == categoryId);
+            var mappedArticles = _mapper.Map<List<ArticleGetDto>>(articles);
+            return mappedArticles;
         }
 
         public ArticleGetDto Get(int id)
@@ -61,15 +64,18 @@ namespace BlogSite.Business.Concrete
             _articleDal.Delete(deleteArticle);
         }
 
-        public List<Article> GetAll()
+        public List<ArticleGetDto> GetAll()
         {
-            return _articleDal.GetAll();
+            var articles = _articleDal.GetAll();
+            var mappedArticles = _mapper.Map<List<ArticleGetDto>>(articles);
+            return mappedArticles;
         }
 
-        public List<Article> GetArticlesByMostView()
+        public List<ArticleGetDto> GetArticlesByMostView()
         {
             var articles = _articleDal.GetByTakeNumber(10).OrderByDescending(x => x.ViewCount).ToList();
-            return articles;
+            var mapperArticles = _mapper.Map<List<ArticleGetDto>>(articles);
+            return mapperArticles;
         }
 
         public ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize)
@@ -116,5 +122,26 @@ namespace BlogSite.Business.Concrete
             articleGetDtoWithPagging.TotalCount = count;
             return articleGetDtoWithPagging;
         }
+
+        public ArticleGetDtoWithPagging GetArticlesArchiveList(int year, int month, int page, int pageSize)
+        {
+            var articles = _articleDal.GetAllWithPagging(page, pageSize, x => x.CreatedDate.Year == year && x.CreatedDate.Month == month);
+            var count = _articleDal.Count(x => x.CreatedDate.Year == year && x.CreatedDate.Month == month);
+            var mappedArticles = _mapper.Map<List<ArticleGetDto>>(articles);
+            ArticleGetDtoWithPagging articleGetDtoWithPagging = new ArticleGetDtoWithPagging
+            {
+                ArticleGetDtos=mappedArticles,
+                TotalCount=count
+            };
+            return articleGetDtoWithPagging;
+        }
+
+        public object GetArticlesArchive()
+        {
+            var articles = _articleDal.GetArticlesArchiveGroupByDate();
+            return articles;
+        }
+
+        
     }
 }

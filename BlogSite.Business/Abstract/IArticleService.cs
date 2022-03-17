@@ -13,16 +13,16 @@ namespace BlogSite.Business.Abstract
     {
         ArticleGetDto Get(int id);
         Article GetOne();
-        List<Article> GetAll(); 
+        List<ArticleGetDto> GetAll(); 
         void Add(ArticleAddDto entity);
         void Update(ArticleUpdateDto entity);
         void Delete(int id);
-        List<Article> GetArticlesByCategoryId(int categoryId);
+        List<ArticleGetDto> GetArticlesByCategoryId(int categoryId);
         ArticleGetDtoWithPagging GetAllWithPagging(int page, int pageSize);
         ArticleGetDtoWithPagging GetArticlesWithPaggingByCategoryId(int categoryId,int page, int pageSize);
         ArticleGetDtoWithPagging GetArticlesWithPaggingBySearchText(string searchText, int page, int pageSize);
-        List<Article> GetArticlesByMostView();
-
-
+        List<ArticleGetDto> GetArticlesByMostView();
+        object GetArticlesArchive();
+        ArticleGetDtoWithPagging GetArticlesArchiveList(int year, int month, int page, int pageSize);
     }
 }
