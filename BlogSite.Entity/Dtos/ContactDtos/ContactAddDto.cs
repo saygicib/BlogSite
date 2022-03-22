@@ -12,5 +12,6 @@ namespace BlogSite.Entities.Dtos.ContactDtos
         public string Email { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
+        public DateTime CraetedDate { get; set; } = DateTime.Now;
     }
 }

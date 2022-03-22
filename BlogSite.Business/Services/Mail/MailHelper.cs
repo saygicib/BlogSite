@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BlogSite.Entities.Dtos.ContactDtos;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 
@@ -49,6 +50,21 @@ namespace BlogSite.Business.Services.Mail
 
             SmtpServer.Send(mail);
 
+        }
+        public static void SendMailForContact(ContactAddDto contactAddDto)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient(smtpServer, smtpPort);
+            mail.From = new MailAddress(from);
+            mail.To.Add("bsaygici@hotmail.com");
+            mail.Subject = contactAddDto.Subject;
+            mail.Body = contactAddDto.Message;
+            mail.IsBodyHtml = isBodyHtml;
+
+            if (networkCredential != null)
+                SmtpServer.Credentials = networkCredential;
+
+            SmtpServer.Send(mail);
         }
     }
 }

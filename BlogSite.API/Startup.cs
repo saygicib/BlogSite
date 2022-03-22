@@ -44,10 +44,12 @@ namespace BlogSite.API
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICommentService, CommentManager>();
+            services.AddScoped<IContactService, ContactManager>();
 
             services.AddScoped<IArticleDal, EfArticleDal>();
             services.AddScoped<ICategoryDal, EfCategoryDal>();
             services.AddScoped<ICommentDal, EfCommentDal>();
+            services.AddScoped<IContactDal, EfContactDal>();
 
             services.AddHostedService<SendMailToUserService>();
 

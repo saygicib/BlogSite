@@ -1,0 +1,15 @@
+﻿using BlogSite.DataAccess.Abstract;
+using BlogSite.DataAccess.Concrete.EntityFramework.Contexts;
+using BlogSite.Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BlogSite.DataAccess.Concrete.EntityFramework.Repositories
+{
+    public class EfContactDal : EfCoreGenericRepositoryDal<Contact, BlogSiteContext>, IContactDal
+    {
+    }
+}
