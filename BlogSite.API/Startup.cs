@@ -1,5 +1,7 @@
 using BlogSite.Business.Abstract;
 using BlogSite.Business.Concrete;
+using BlogSite.Business.Services.RabbitMQ;
+using BlogSite.Business.Services.RabbitMQ.BackgroundServices;
 using BlogSite.DataAccess.Abstract;
 using BlogSite.DataAccess.Concrete.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,11 @@ namespace BlogSite.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });
+
+            services.AddSingleton<RabbitMQClientService>();
+            services.AddSingleton<RabbitMQPublisher>();
+
             services.AddCors(options => options.AddDefaultPolicy(policy =>
             policy.AllowCredentials().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(x => true)));
 
@@ -41,6 +49,7 @@ namespace BlogSite.API
             services.AddScoped<ICategoryDal, EfCategoryDal>();
             services.AddScoped<ICommentDal, EfCommentDal>();
 
+            services.AddHostedService<SendMailToUserService>();
 
 
 
