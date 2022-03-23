@@ -9,6 +9,6 @@ namespace BlogSite.Business.Abstract
 {
     public interface IContactService
     {
-        void SendMail(ContactAddDto dto);
+        void SendMailForContact(ContactAddDto dto);
     }
 }

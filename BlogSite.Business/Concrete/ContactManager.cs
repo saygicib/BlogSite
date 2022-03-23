@@ -21,7 +21,7 @@ namespace BlogSite.Business.Concrete
             _contactDal = contactDal;
             _mapper = mapper;
         }
-        public void SendMail(ContactAddDto dto)
+        public void SendMailForContact(ContactAddDto dto)
         {
             MailHelper.SendMailForContact(dto);
 

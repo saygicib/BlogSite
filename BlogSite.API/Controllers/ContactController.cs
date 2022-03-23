@@ -18,10 +18,10 @@ namespace BlogSite.API.Controllers
         {
             _contactService = contactService;
         }
-        [HttpPost("SendMail")]
-        public IActionResult SendMail(ContactAddDto dto)
+        [HttpPost("SendMailForContact")]
+        public IActionResult SendMailForContact(ContactAddDto dto)
         {
-            _contactService.SendMail(dto);
+            _contactService.SendMailForContact(dto);
             return Ok();
         }
 
